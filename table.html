@@ -1,0 +1,175 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+      
+    <meta charset="UTF-8">  
+      
+    <title>Table</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script src="table.js?v25"></script>
+    <link rel="stylesheet" type="text/css" href="table.css">
+  </head>
+  <body>
+
+    
+    <b>BUSCAR:</b>
+    <input type="text" id="search" style="display: none;">
+    <input type="text" id="search-words" class="search-input"  onkeyup="jQuery('#search').val(createSearchString()).keyup();"> <span id="paginator"></span>
+    
+    <b style="margin-left: 11px;">Status : </b>
+    <span style="vertical-align: top;">
+      <select id="status-selector" class="search-input" name="status-selector" onchange="jQuery('#search').val(createSearchString()).keyup();">
+    	<option value="">( Todos )</option>
+    	<option value="1.Teléfono">1.Teléfono</option>
+    	<option value="2.Cargo">2.Cargo</option>
+      </select> 
+    </span>
+    
+    <b style="margin-left: 11px;">Administrador : </b>
+    <span style="vertical-align: top;">
+      <select id="users-selector" class="search-input"  name="users-selector" onchange="jQuery('#search').val(createSearchString()).keyup();">
+    	<option value="">( Todos )</option>
+    	<option value="4.Teléfono">4.Teléfono</option>
+        <option value="5.Teléfono">5.Teléfono</option>
+      </select> 
+    </span>
+    
+    <span id="paginator"> </span>
+    <table id="table">
+      <thead>
+        <th class="id_user">ID</th>
+        <th class="telefono">Teléfono</th>
+        <th class="cargo">Cargo</th>
+        <th class="web">Web</th>
+      </thead>
+      <tbody>
+        <tr>
+         <td class="id_user">1</td>
+         <td class="telefono">1.Teléfono</td>
+         <td class="cargo">1.Cargo</td>
+         <td class="web">aaa</td>
+        </tr>
+        <tr>
+          <td class="id_user">2</td>
+          <td class="telefono">2.Teléfono</td>
+          <td class="cargo">2.Cargo</td>
+          <td class="web">2.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">3</td>
+          <td class="telefono">3.Teléfono</td>
+          <td class="cargo">3.Cargo</td>
+          <td class="web">3.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">4</td>
+          <td class="telefono">4.Teléfono</td>
+          <td class="cargo">4.Cargo</td>
+          <td class="web">aaa</td>
+        </tr>
+        <tr>
+          <td class="id_user">5</td>
+          <td class="telefono">5.Teléfono</td>
+          <td class="cargo">5.Cargo</td>
+          <td class="web">5.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">6</td>
+          <td class="telefono">6.Teléfono</td>
+          <td class="cargo">6.Cargo</td>
+          <td class="web">6.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">7</td>
+          <td class="telefono">7.Teléfono</td>
+          <td class="cargo">7.Cargo</td>
+          <td class="web">7.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">8</td>
+          <td class="telefono">8.Teléfono</td>
+          <td class="cargo">8.Cargo</td>
+          <td class="web">8.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">9</td>
+          <td class="telefono">9.Teléfono</td>
+          <td class="cargo">9.Cargo</td>
+          <td class="web">9.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">10</td>
+          <td class="telefono">10.Teléfono</td>
+          <td class="cargo">10.Cargo</td>
+          <td class="web">10.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">11</td>
+          <td class="telefono">11.Teléfono</td>
+          <td class="cargo">11.Cargo</td>
+          <td class="web">11.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">12</td>
+          <td class="telefono">12.Teléfono</td>
+          <td class="cargo">12.Cargo</td>
+          <td class="web">12.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">13</td>
+          <td class="telefono">13.Teléfono</td>
+          <td class="cargo">13.Cargo</td>
+          <td class="web">13.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">14</td>
+          <td class="telefono">14.Teléfono</td>
+          <td class="cargo">14.Cargo</td>
+          <td class="web">14.Web</td>
+        </tr>
+        <tr>
+          <td class="id_user">15</td>
+          <td class="telefono">15.Teléfono</td>
+          <td class="cargo">15.Cargo</td>
+          <td class="web">15.Web</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    
+    
+    <a href="javascript:pagination.init()">PAGINATE</a>
+    
+    <a href="javascript:tbl.orderByIndex(3, 'string', true);">ORDER 0 INT</a>
+    <a href="javascript:tbl.emptyTable();">Empty table</a>
+    <a href="javascript:tbl.appendElements(arrElements);">Append Values</a>
+    <a href="javascript:tbl.prependElements(arrElements);">Prepend Values</a>
+    
+    
+    <script>
+    	arrElements = {
+    		'44': {nom: 'gg1', email: 'gg@1', tel: 'ggt'},
+    		'45': {nom: 'gg2', email: 'gg@2', tel: 'ggt'},
+    		'46': {nom: 'gg3', email: 'gg@3', tel: 'ggt'}
+    	};
+    </script>
+    
+    
+    <script>
+    
+    //// TABLE
+    
+    	
+    jQuery(function() {
+    	
+      window.tbl = new Table({tableObj : jQuery('#table')});
+    
+    });
+    
+   </script>
+
+
+
+ </body>
+</html>
