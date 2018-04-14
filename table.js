@@ -17,9 +17,9 @@ this.Paginator = (function($) {
   /**
    * Create new instance of a Paginator.
    * 
-   * @class Represents a paginator.
+   * @class Represents a Paginator.
    * 
-   * @param {Object} options - Options to setup paginator.
+   * @param {Object} options - Options to setup the paginator.
    * 
    */
   var Paginator = function(options) {
@@ -178,8 +178,7 @@ this.Paginator = (function($) {
 	 *
 	 * @callback paginationCallback
 	 * 
-     * @param {number} responseCode
-     * @param {string} responseMessage
+     * @param {Object} evt Event object
      * 
 	 */
     
@@ -192,7 +191,7 @@ this.Paginator = (function($) {
      * 
      */
     
-    Paginator.prototype.setPaginationCallback = function(callback) { // Pagination
+    Paginator.prototype.setPageCallback = function(callback) { // Pagination
     
       this.paginatorObj.off('click', 'a');
       
@@ -321,7 +320,7 @@ this.Table = (function($) {
   /**
    * Create new instance of a Table.
    * 
-   * @class Represents a table.
+   * @class Represents a Table.
    * 
    * @param {Object} options - Options of the table.
    * 
