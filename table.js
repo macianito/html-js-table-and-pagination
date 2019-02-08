@@ -2,6 +2,7 @@
  * @file Dynamically Create HTML Table with Pagination
  * @see [Example]{@link http://example.com}
  * @author Mazius <ivanmaciagalan@gmail.com>
+ * @see [GITHUB project]{@link https://github.com/macianito/html-js-table-and-pagination/}
  * @version 0.1
  */
 
@@ -12,7 +13,8 @@
 
 
 /** @global */
-this.Paginator = (function($) {
+this.Paginator = (function($) {	
+  'use strict';
 
   /**
    * Create new instance of a Paginator.
