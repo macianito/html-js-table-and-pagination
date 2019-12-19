@@ -1,13 +1,13 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-      
-    <meta charset="UTF-8">  
-      
+
+    <meta charset="UTF-8">
+
     <title>Table JS</title>
-    
+
     <link id="bootstrap" rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" />
-    
+
 
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script src="table.js?v25"></script>
@@ -15,29 +15,29 @@
   </head>
   <body>
 
-    
+
     <b>BUSCAR:</b>
     <input type="text" id="search" style="display: none;">
     <input type="text" id="search-words" class="search-input"  onkeyup="jQuery('#search').val(createSearchString()).keyup();"> <span id="paginator"></span>
-    
+
     <b style="margin-left: 11px;">Status : </b>
     <span style="vertical-align: top;">
       <select id="status-selector" class="search-input" name="status-selector" onchange="jQuery('#search').val(createSearchString()).keyup();">
     	<option value="">( Todos )</option>
     	<option value="1.Teléfono">1.Teléfono</option>
     	<option value="2.Cargo">2.Cargo</option>
-      </select> 
+      </select>
     </span>
-    
+
     <b style="margin-left: 11px;">Administrador : </b>
     <span style="vertical-align: top;">
       <select id="users-selector" class="search-input"  name="users-selector" onchange="jQuery('#search').val(createSearchString()).keyup();">
     	<option value="">( Todos )</option>
     	<option value="4.Teléfono">4.Teléfono</option>
         <option value="5.Teléfono">5.Teléfono</option>
-      </select> 
+      </select>
     </span>
-    
+
     <span id="paginator"> </span>
     <table id="table">
       <thead>
@@ -139,16 +139,16 @@
         </tr>
       </tbody>
     </table>
-    
-    
-    
+
+
+
     <a href="javascript:pagination.init()">PAGINATE</a> |
     <a href="javascript:tbl.orderByIndex(3, 'string', true);">ORDER 0 INT</a> |
     <a href="javascript:tbl.emptyTable();">Empty table</a> |
     <a href="javascript:tbl.appendElements(arrElements);">Append Values</a> |
     <a href="javascript:tbl.prependElements(arrElements);">Prepend Values</a>
-    
-    
+
+
     <script>
     	arrElements = {
     		'44': {nom: 'gg1', email: 'gg@1', tel: 'ggt'},
@@ -156,19 +156,29 @@
     		'46': {nom: 'gg3', email: 'gg@3', tel: 'ggt'}
     	};
     </script>
-    
-    
+
+
     <script>
-    
+
     //// TABLE
-    
-    	
+
+
     jQuery(function() {
-    	
-      window.tbl = new Table({tableObj : jQuery('#table')});
-    
+
+      window.tbl = new Table({
+        tableObj : jQuery('#table'),
+        sortDataType  : ['number', 'string', 'string', 'string'],
+        onLoad        : function() {
+
+          console.log('on load');
+
+        },
+        pagination : true
+
+      });
+
     });
-    
+
    </script>
 
 

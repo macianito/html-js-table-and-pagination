@@ -13,16 +13,16 @@
 
 
 /** @global */
-this.Paginator = (function($) {	
+this.Paginator = (function($) {
   'use strict';
 
   /**
    * Create new instance of a Paginator.
-   * 
+   *
    * @class Represents a Paginator.
-   * 
+   *
    * @param {Object} options - Options to setup the paginator.
-   * 
+   *
    */
   var Paginator = function(options) {
 
@@ -33,7 +33,7 @@ this.Paginator = (function($) {
    * Initialize and setup the paginator.
    *
    * @param {Object} options - Options to setup paginator.
-   * 
+   *
    */
 
   Paginator.prototype.init = function(options) {
@@ -51,30 +51,30 @@ this.Paginator = (function($) {
       this.selectorElements    = options.selectorElements   || '.element';
       this.selectPageCallback  = options.selectPageCallback || null;
       this.changePageCallback  = options.changePageCallback || _changePageCallback;
-      
+
       this.onChangePage      = options.onChangePage  || function() {};
 
       this.paginatorObj.off();
-      
-      
+
+
       if(!this.initiated) {
-        
+
         // create elements page obj
         this.elementsPageObj = $('<select id="elements-page"></select>');
-      
+
         this.elementsPageObj.append(
           '<option value="4">4</option>' +
           '<option value="10">10</option>' +
           '<option value="50">50</option>' +
           '<option value="300">300</option>'
         );
-      
+
         this.paginatorObj.after(this.elementsPageObj);
-      
+
       } else {
       	this.elementsPageObj.off();
       }
-      
+
       _setEvents.call(this);
 
       this.initiated = true;
@@ -127,7 +127,7 @@ this.Paginator = (function($) {
 
     /**
      * Change current page.
-     * 
+     *
      * @public
      *
      */
@@ -137,7 +137,7 @@ this.Paginator = (function($) {
       this.currentPage = page;
 
       if(!onlyPaginator) {
- 
+
         this.changePageCallback();
 
       }
@@ -146,12 +146,12 @@ this.Paginator = (function($) {
 
       this.createPaginator();
     };
-    
+
     /**
      * Reload paginator.
-     * 
+     *
      * @public
-     * 
+     *
      * @param {Object} options - Options to setup paginator.
      *
      */
@@ -161,121 +161,103 @@ this.Paginator = (function($) {
       this.init($.extend(this, options));
 
     };
-    
+
     /**
      * Refresh paginator.
-     * 
+     *
      * @public
      *
      */
-	
+
 	Paginator.prototype.refresh = function() {
 
       this.reload();
 
     };
-    
+
     /**
 	 * Callback for adding click event to paginator elements.
 	 *
 	 * @callback paginationCallback
-	 * 
+	 *
      * @param {Object} evt Event object
-     * 
+     *
 	 */
-    
+
     /**
      * Set the function to use when clicking a paginator element.
-     * 
+     *
      * @public
      *
      * @param {paginationCallback} callback - A callback to run
-     * 
+     *
      */
-    
+
     Paginator.prototype.setPageCallback = function(callback) { // Pagination
-    
+
       this.paginatorObj.off('click', 'a');
-      
+
       this.paginatorObj.on('click', 'a', callback.bind(this)); // https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-    
+
     };
-    
+
     return Paginator;
-    
-   
+
+
   /**
    * Setup events.
-   * 
+   *
    * @private
-   * 
+   *
    */
 
-   
+
    function _setEvents() {
-   	
-   	 /* var self = this;
-   
-     this.elementsPageObj.on('change', function() {
 
-       self.reload({elementsPerPage: $(this).val()});
-
-     });
-     
-     this.selectPageCallback = function(evt) {
-
-       evt.preventDefault();
-
-       self.changePage($(evt.target).data('page'));
-
-     };
-   
-     this.paginatorObj.on('click', 'a', this.selectPageCallback); */
-    
     this.elementsPageObj.on('change', function(evt) {
 
       this.reload({elementsPerPage: $(evt.target).val()});
-       
+
       var rows = this.containerElements.find(this.selectorElements + ':not(.row-hidden)').filter(':visible'); // row-hidden clase per ocultar files quan es cerca
-       
+
       if(rows.length == 0) {
-      
+
        	this.changePage(0);
-      
+
       }
-       
 
-     }.bind(this)); // https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-     
-     this.selectPageCallback = this.selectPageCallback || function(evt) {
 
-       evt.preventDefault();
+    }.bind(this)); // https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 
-       this.changePage($(evt.target).data('page'));
+    this.selectPageCallback = this.selectPageCallback || function(evt) {
+
+      evt.preventDefault();
+
+      this.changePage($(evt.target).data('page'));
 
      };
-   
+
      this.paginatorObj.on('click', 'a', this.selectPageCallback.bind(this)); // https://developer.mozilla.org/ca/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-   
+
    }
-   
+
    /**
      * Default function callback when changing the page.
-     * 
+     *
      * @private
      *
      * @param {paginationCallback} callback - A callback to run
-     * 
+     *
      */
-   
+
    function _changePageCallback() {
-   	
+
    	  var rows = this.containerElements.find(this.selectorElements + ':not(.row-hidden)');
 
       rows.hide();
 
       rows.slice(this.currentPage * this.elementsPerPage, (this.currentPage + 1) * this.elementsPerPage).show();
-   	
+
    }
 
 
@@ -284,33 +266,33 @@ this.Paginator = (function($) {
 
 /**
  * Create a search string based on values from search inputs.
- * 
+ *
  * @global
  * @function
- * 
+ *
  */
 
 
 function createSearchString() {
 
   var strSearch = '';
-  
+
   var objSearch = {};
-  
+
   $('.search-input').map(function() {
-  	
+
   	objSearch[this.id] = $(this).val();
-  	
+
   });
 
   for(var i in objSearch) {
     if(objSearch[i].trim() != '')
 	  strSearch += objSearch[i] + ' & ';
-  }           
+  }
 
-  return strSearch.slice(0, -2);	
+  return strSearch.slice(0, -2);
 
-} 
+}
 
 
 
@@ -321,58 +303,61 @@ this.Table = (function($) {
 
   /**
    * Create new instance of a Table.
-   * 
+   *
    * @class Represents a Table.
-   * 
+   *
    * @param {Object} options - Options of the table.
-   * 
+   *
    */
   var Table = function(options) {
 
     this.tableObj     =  options.tableObj     || $('#table');
     this.searchInput  =  options.searchInput  || $('#search');
-    this.sortDataType =  options.sortDataType || ['int', null, 'string', 'string', 'string', 'string', 'string',
-                                                  'string', 'string', 'string', 'string', 'string', 'string', 'string', 
-                                                  'string', 'string', 'string', 'string', 'string', 'string', 'string']; // array amb els tipus collacio per l'ordenacio de cada columna
+    this.sortDataType =  options.sortDataType || ['int', null, 'string', 'string']; // array amb els tipus collacio per l'ordenacio de cada columna
 
-  
-	this.pagination = new Paginator({
+
+    this.onLoad =  options.onLoad  || function() {};
+
+    // set if the table has pagination or not
+    this.pagination = !options.pagination  || new Paginator({
       elementsPerPage : $('#elements-page').val(),
       selectorElements: 'tr',
       containerElements: this.tableObj.children('tbody'),
-      onChangePage: function() { } 
-    });  
-	  
+      onChangePage: function() { }
+    });
+
     _setEvents.call(this);
 
-  
+    this.onLoad();
+
+
   };
-  
+
   /**
    * Add elements to the table. The table can be filled or you can append o prepend
    * the elements
-   * 
+   *
    * @public
    *
    * @param   {Object}  elements         Collection of items to append
    * @param   {Object}  params           Params
    * @param   {string}  params.mode      Mode of insertion
    * @param   {string}  params.tdAttrId  Establish cell id as id o class attributte
-   *  
+   *
    */
-  
+
   Table.prototype.addElements = function(elements, params) {
-  	
+
   	params = params || {};
-  	
+
   	var TBody = this.tableObj.children('tbody'),
   	    tdAttrId = params.tdAttrId || 'class',
   	    mode = params.mode || 'fill';
-  	    
+
   	if(mode == 'fill') {
   	  TBody.empty();
   	}
-  	
+
   	for(var i in elements) {
 
        var tr = $('<tr id="' + i + '"></tr>');
@@ -382,80 +367,80 @@ this.Table = (function($) {
        } else {
        	 TBody.append(tr);
        }
-       
+
        $.each(elements[i], function(index, value) {
 	     tr.append('<td ' + tdAttrId + '="' + index + '">' + value + '</td>');
 	   });
-  	
+
   	}
-  	
+
   	this.pagination.refresh();
-  	
+
   };
-  
+
   /**
    * Append elements to the table.
-   * 
+   *
    * @public
    *
    * @param   {Object}  elements    Collection of items to append
    * @param   {Object}  params      Params
    * @param   {string}  params.mode Mode of insertion
-   *  
+   *
    */
-  
+
   Table.prototype.appendElements = function(elements, params) {
-  	
+
   	params = params || {};
-  	
+
   	params.mode = 'append';
-  	
+
   	this.addElements(elements, params);
-  	
+
   };
-  
+
   /**
    * Empty the content of the table.
-   * 
+   *
    * @public
    *
    * @param   {Object}  elements     Collection of items to insert
    * @param   {Object}  params       Params
    * @param   {string}  params.mode  Mode of insertion
-   *  
+   *
    */
-  
+
   Table.prototype.prependElements = function(elements, params) {
-  	
+
   	params = params || {};
-  	
+
   	params.mode = 'prepend';
-  	
+
   	this.addElements(elements, params);
-  	
+
   };
-  
+
   /**
    * Empty the table.
    *
    * @public
-   * 
+   *
    */
-  
+
   Table.prototype.emptyTable = function() {
-  	
+
   	this.tableObj.children('tbody').empty();
-  	
+
   	this.pagination.refresh();
-  	
+
   };
-  
-  
+
+
   /**
    * Sort a column selected by index and according the type of data.
-   * 
+   *
    * @public
-   * 
+   *
    * @param   {number}  index     num of column to order
    * @param   {string}  typeData  type of data to compare
    * @param   {boolean} asc       whether the comparison will be asc or desc
@@ -484,6 +469,10 @@ this.Table = (function($) {
 
       asc ? arrayToSort.sort(_compareStringsAsc) : arrayToSort.sort(_compareStringsDesc);
 
+    } else if(typeData === 'number') {
+
+      asc ? arrayToSort.sort(_compareNumberAsc) : arrayToSort.sort(_compareNumberDesc);
+
     } else {
 
       arrayToSort.sort(function (a, b) { return asc ? a - b : b - a ; } );
@@ -508,14 +497,14 @@ this.Table = (function($) {
     //console.log(arrayToSort);
 
   };
-  
+
   return Table;
 
   /**
    * Takes 2 strings, compare them desc and returns the result.
-   * 
+   *
    * @private
-   * 
+   *
    * @param   {string} a     the first string
    * @param   {string} b     the second string
    *
@@ -532,12 +521,12 @@ this.Table = (function($) {
     return 0; // names must be equal
 
   }
-  
+
   /**
    * Takes 2 strings, compare them asc and returns the result.
    *
    * @private
-   * 
+   *
    * @param   {string} a     the first string
    * @param   {string} b     the second string
    *
@@ -554,14 +543,59 @@ this.Table = (function($) {
     return 0; // names must be equal
 
   }
-  
-  
-  
+
+  /**
+   * Takes 2 numbers, compare them desc and returns the result.
+   *
+   * @private
+   *
+   * @param   {number} a     the first number
+   * @param   {number} b     the second number
+   *
+   * @returns {number} the result of the comparison
+   */
+
+  function _compareNumberDesc(a, b) {
+
+    var A = parseFloat(a), // ignore upper and lowercase
+        B = parseFloat(b); // ignore upper and lowercase
+
+    if(A > B) return -1;
+    if(A < B) return 1;
+    return 0; // names must be equal
+
+  }
+
+
+  /**
+   * Takes 2 numbers, compare them asc and returns the result.
+   *
+   * @private
+   *
+   * @param   {number} a     the first number
+   * @param   {number} b     the second number
+   *
+   * @returns {number} the result of the comparison
+   */
+
+  function _compareNumberAsc(a, b) {
+
+    var A = parseFloat(a),
+        B = parseFloat(b);
+
+    if(A < B) return -1;
+    if(A > B) return 1;
+    return 0; // names must be equal
+
+  }
+
+
+
   /**
    * Setup events of the table.
-   * 
+   *
    * @private
-   * 
+   *
    */
 
   function _setEvents() {
@@ -611,25 +645,25 @@ this.Table = (function($) {
         self.pagination.reload();
         return;
       }
-      
+
       if(searchVal.indexOf(('&')) === - 1 ) { // sino hi ha un & es el car que que hi ha OR o res
-      
+
 	      searchVal = searchVal.split('|');
-	      
+
 	      searchVal.forEach(function(item, index, arr) { // TRIM
 			arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
 		  });
-		  
+
 		  searchVal = searchVal.join('|');
-	
+
 	      var searchValRegex = new RegExp('(' +searchVal + ')', "i");
-	
+
 	      rows.each(function() {
-	
+
 	        var element = $(this),
 	            //children = element.children('.name, .email, .login'), // restringit
 	            children = element.children('td');
-	            
+
 	        var strRow = children.map(function() { // construim cadena amb tots els elements fila
 			  return this.innerHTML;
 			})
@@ -640,44 +674,44 @@ this.Table = (function($) {
 	           element.removeClass('row-hidden');
 	        else
 	           element.addClass('row-hidden');
-	
+
 	      });
 
       } else { // AND/&
-      	
+
       	searchVal = searchVal.split('&');
-      	
+
       	searchVal.forEach(function(item, index, arr) { // TRIM
 		  arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
 		});
-      	
+
       	rows.each(function() {
-	
+
 	        var element = $(this),
 	            //children = element.children('.name, .email, .login'), // restringit
 	            children = element.children('td'),
 	            found = true;
-	            
+
 	        var strRow = children.map(function() {
 			  return this.innerHTML;
 			})
 			.get()
 			.join(' ');
- 
+
 	        for(var len = searchVal.length, i = 0; i < len; i++) {
-	
+
 	          if(strRow.indexOf(searchVal[i]) === -1) { // si una search word no la troba dins la cadena formada per tota la fila s'ha de ocultar aquella fila
 	          	element.addClass('row-hidden');
 	            return;
 	          }
-	
+
 	        }
-	        
+
 	        element.removeClass('row-hidden');
-	
+
 	     });
-      	
-      	
+
+
       }
 
       self.pagination.reload();
@@ -685,7 +719,7 @@ this.Table = (function($) {
     });
 
   };
- 
+
 })(jQuery); // Fi Table
 
 
