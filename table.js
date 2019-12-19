@@ -72,7 +72,7 @@ this.Paginator = (function($) {
         this.paginatorObj.after(this.elementsPageObj);
 
       } else {
-      	this.elementsPageObj.off();
+          this.elementsPageObj.off();
       }
 
       _setEvents.call(this);
@@ -169,20 +169,20 @@ this.Paginator = (function($) {
      *
      */
 
-	Paginator.prototype.refresh = function() {
+    Paginator.prototype.refresh = function() {
 
       this.reload();
 
     };
 
     /**
-	 * Callback for adding click event to paginator elements.
-	 *
-	 * @callback paginationCallback
-	 *
+     * Callback for adding click event to paginator elements.
+     *
+     * @callback paginationCallback
+     *
      * @param {Object} evt Event object
      *
-	 */
+     */
 
     /**
      * Set the function to use when clicking a paginator element.
@@ -222,7 +222,7 @@ this.Paginator = (function($) {
 
       if(rows.length == 0) {
 
-       	this.changePage(0);
+           this.changePage(0);
 
       }
 
@@ -252,7 +252,7 @@ this.Paginator = (function($) {
 
    function _changePageCallback() {
 
-   	  var rows = this.containerElements.find(this.selectorElements + ':not(.row-hidden)');
+         var rows = this.containerElements.find(this.selectorElements + ':not(.row-hidden)');
 
       rows.hide();
 
@@ -281,13 +281,13 @@ function createSearchString() {
 
   $('.search-input').map(function() {
 
-  	objSearch[this.id] = $(this).val();
+      objSearch[this.id] = $(this).val();
 
   });
 
   for(var i in objSearch) {
     if(objSearch[i].trim() != '')
-	  strSearch += objSearch[i] + ' & ';
+      strSearch += objSearch[i] + ' & ';
   }
 
   return strSearch.slice(0, -2);
@@ -348,33 +348,33 @@ this.Table = (function($) {
 
   Table.prototype.addElements = function(elements, params) {
 
-  	params = params || {};
+      params = params || {};
 
-  	var TBody = this.tableObj.children('tbody'),
-  	    tdAttrId = params.tdAttrId || 'class',
-  	    mode = params.mode || 'fill';
+      var TBody = this.tableObj.children('tbody'),
+          tdAttrId = params.tdAttrId || 'class',
+          mode = params.mode || 'fill';
 
-  	if(mode == 'fill') {
-  	  TBody.empty();
-  	}
+      if(mode == 'fill') {
+        TBody.empty();
+      }
 
-  	for(var i in elements) {
+      for(var i in elements) {
 
        var tr = $('<tr id="' + i + '"></tr>');
 
        if(mode == 'prepend') {
          TBody.prepend(tr);
        } else {
-       	 TBody.append(tr);
+            TBody.append(tr);
        }
 
        $.each(elements[i], function(index, value) {
-	     tr.append('<td ' + tdAttrId + '="' + index + '">' + value + '</td>');
-	   });
+         tr.append('<td ' + tdAttrId + '="' + index + '">' + value + '</td>');
+       });
 
-  	}
+      }
 
-  	this.pagination.refresh();
+      this.pagination.refresh();
 
   };
 
@@ -391,11 +391,11 @@ this.Table = (function($) {
 
   Table.prototype.appendElements = function(elements, params) {
 
-  	params = params || {};
+      params = params || {};
 
-  	params.mode = 'append';
+      params.mode = 'append';
 
-  	this.addElements(elements, params);
+      this.addElements(elements, params);
 
   };
 
@@ -412,11 +412,11 @@ this.Table = (function($) {
 
   Table.prototype.prependElements = function(elements, params) {
 
-  	params = params || {};
+      params = params || {};
 
-  	params.mode = 'prepend';
+      params.mode = 'prepend';
 
-  	this.addElements(elements, params);
+      this.addElements(elements, params);
 
   };
 
@@ -429,9 +429,9 @@ this.Table = (function($) {
 
   Table.prototype.emptyTable = function() {
 
-  	this.tableObj.children('tbody').empty();
+      this.tableObj.children('tbody').empty();
 
-  	this.pagination.refresh();
+      this.pagination.refresh();
 
   };
 
@@ -648,68 +648,68 @@ this.Table = (function($) {
 
       if(searchVal.indexOf(('&')) === - 1 ) { // sino hi ha un & es el car que que hi ha OR o res
 
-	      searchVal = searchVal.split('|');
+          searchVal = searchVal.split('|');
 
-	      searchVal.forEach(function(item, index, arr) { // TRIM
-			arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
-		  });
+          searchVal.forEach(function(item, index, arr) { // TRIM
+            arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
+          });
 
-		  searchVal = searchVal.join('|');
+          searchVal = searchVal.join('|');
 
-	      var searchValRegex = new RegExp('(' +searchVal + ')', "i");
+          var searchValRegex = new RegExp('(' +searchVal + ')', "i");
 
-	      rows.each(function() {
+          rows.each(function() {
 
-	        var element = $(this),
-	            //children = element.children('.name, .email, .login'), // restringit
-	            children = element.children('td');
+            var element = $(this),
+                //children = element.children('.name, .email, .login'), // restringit
+                children = element.children('td');
 
-	        var strRow = children.map(function() { // construim cadena amb tots els elements fila
-			  return this.innerHTML;
-			})
-			.get()
-			.join(' '); // frases separades per espai per evitar que la unio de dues cel-les doni error perque es formi una paraula que s'esta cercant
+            var strRow = children.map(function() { // construim cadena amb tots els elements fila
+              return this.innerHTML;
+            })
+            .get()
+            .join(' '); // frases separades per espai per evitar que la unio de dues cel-les doni error perque es formi una paraula que s'esta cercant
 
-	        if(searchValRegex.test(strRow))
-	           element.removeClass('row-hidden');
-	        else
-	           element.addClass('row-hidden');
+            if(searchValRegex.test(strRow))
+               element.removeClass('row-hidden');
+            else
+               element.addClass('row-hidden');
 
-	      });
+          });
 
       } else { // AND/&
 
-      	searchVal = searchVal.split('&');
+          searchVal = searchVal.split('&');
 
-      	searchVal.forEach(function(item, index, arr) { // TRIM
-		  arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
-		});
+          searchVal.forEach(function(item, index, arr) { // TRIM
+          arr[index] = item.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, ''); // fem trim
+        });
 
-      	rows.each(function() {
+          rows.each(function() {
 
-	        var element = $(this),
-	            //children = element.children('.name, .email, .login'), // restringit
-	            children = element.children('td'),
-	            found = true;
+            var element = $(this),
+                //children = element.children('.name, .email, .login'), // restringit
+                children = element.children('td'),
+                found = true;
 
-	        var strRow = children.map(function() {
-			  return this.innerHTML;
-			})
-			.get()
-			.join(' ');
+            var strRow = children.map(function() {
+              return this.innerHTML;
+            })
+            .get()
+            .join(' ');
 
-	        for(var len = searchVal.length, i = 0; i < len; i++) {
+            for(var len = searchVal.length, i = 0; i < len; i++) {
 
-	          if(strRow.indexOf(searchVal[i]) === -1) { // si una search word no la troba dins la cadena formada per tota la fila s'ha de ocultar aquella fila
-	          	element.addClass('row-hidden');
-	            return;
-	          }
+              if(strRow.indexOf(searchVal[i]) === -1) { // si una search word no la troba dins la cadena formada per tota la fila s'ha de ocultar aquella fila
+                  element.addClass('row-hidden');
+                return;
+              }
 
-	        }
+            }
 
-	        element.removeClass('row-hidden');
+            element.removeClass('row-hidden');
 
-	     });
+         });
 
 
       }
